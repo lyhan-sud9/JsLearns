@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JS Rail — Từ Zero đến Hero</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="dot"></span>
+    <div>
+      JS Rail
+      <small>zero&nbsp;→&nbsp;hero</small>
+    </div>
+  </div>
+  <div class="modes">
+    <button class="active" data-mode="learn">Lộ trình học</button>
+    <button data-mode="flash">Flashcard</button>
+  </div>
+  <div class="progress-pill" id="progress-pill">0/0 bài · đã học</div>
+</header>
+
+<div class="storage-bar">
+  <span id="storage-status">💾 Dữ liệu tự lưu trên máy này</span>
+  <div class="storage-actions">
+    <button class="btn" onclick="exportData()">⬇ Xuất file lưu trữ</button>
+    <button class="btn" onclick="document.getElementById('import-file').click()">⬆ Nhập file lưu trữ</button>
+    <input type="file" id="import-file" accept="application/json" style="display:none" onchange="importData(event)">
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="learn-hero">
+  <div>
+    <h1>Học JavaScript từ <span>Zero</span> đến <span>Hero</span></h1>
+    <p>Một lộ trình JavaScript đầy đủ, đi theo từng "trạm" như bản đồ tàu điện — từ cú pháp đầu tiên đến bất đồng bộ, OOP và ES6+. Học xong bài nào, ghi lại flashcard của riêng bạn để ôn tập sau.</p>
+    <div class="cta">
+      <a href="#stage-wrap" class="btn primary">▸ Bắt đầu lộ trình</a>
+      <button class="btn" onclick="switchMode('flash')">🗂 Xem flashcard</button>
+    </div>
+  </div>
+  <div class="terminal">
+    <div class="bar"><span></span><span></span><span></span></div>
+    <pre><span class="c">// hello-world.js</span>
+<span class="k">const</span> hero = <span class="fn">async</span> () => {
+  <span class="k">let</span> skill = <span class="s">"JavaScript"</span>;
+  <span class="k">console</span>.<span class="fn">log</span>(<span class="s">`Đang học ${skill}...`</span>);
+  <span class="k">await</span> luyenTap(skill);
+  <span class="k">return</span> <span id="typed-out"></span>
+};
+hero();</pre>
+  </div>
+</section>
+
+<!-- LEARN MODE -->
+<div class="stage-wrap" id="stage-wrap">
+  <aside class="rail">
+    <p class="rail-title">Lộ trình (9 trạm)</p>
+    <div class="rail-line" id="rail-line"></div>
+    <div class="rail-progress">
+      Tiến độ
+      <div class="rail-bar"><div id="rail-bar-fill"></div></div>
+    </div>
+  </aside>
+
+  <main>
+    <div class="mobile-stepper" id="mobile-stepper"></div>
+    <div class="stage-header">
+      <div class="stage-eyebrow" id="stage-eyebrow"></div>
+      <h2 id="stage-title"></h2>
+      <p id="stage-desc"></p>
+    </div>
+    <div id="lesson-list"></div>
+    <div class="stage-nav-btns">
+      <button class="btn" id="prev-stage">← Trạm trước</button>
+      <button class="btn primary" id="next-stage">Trạm tiếp theo →</button>
+    </div>
+  </main>
+</div>
+
+<!-- FLASHCARD MODE -->
+<div class="stage-wrap" id="flash-wrap" style="display:none; grid-template-columns:1fr;">
+  <main>
+    <div class="stage-header">
+      <div class="stage-eyebrow">GHI NHỚ</div>
+      <h2>Bộ flashcard JavaScript</h2>
+      <p>Bấm vào thẻ để lật, đánh dấu "đã nhớ", hoặc tự viết flashcard ghi chú riêng cho phần bạn đang học.</p>
+    </div>
+
+    <div class="note-form">
+      <h3>✎ Thêm flashcard / ghi chú của bạn</h3>
+      <div class="row">
+        <input id="nf-front" type="text" placeholder="Mặt trước — câu hỏi hoặc khái niệm (VD: closure là gì?)">
+      </div>
+      <div class="row">
+        <textarea id="nf-back" rows="2" placeholder="Mặt sau — câu trả lời / ghi chú của bạn"></textarea>
+      </div>
+      <div class="row" style="grid-template-columns:1fr auto;">
+        <select id="nf-stage"></select>
+        <div class="actions"><button class="btn primary" onclick="addCustomCard()">+ Lưu flashcard</button></div>
+      </div>
+    </div>
+
+    <div class="flash-toolbar">
+      <select class="filter-select" id="flash-filter"></select>
+      <input class="search-input" id="flash-search" type="text" placeholder="Tìm flashcard...">
+      <button class="btn" onclick="shuffleDeck()">🔀 Xáo bài</button>
+      <div class="deck-stats" id="deck-stats"></div>
+    </div>
+
+    <div class="deck" id="deck"></div>
+  </main>
+</div>
+
+<footer>JS Rail · tự học JavaScript, không quảng cáo, không theo dõi · dữ liệu của bạn lưu trên chính máy này — dùng nút xuất/nhập file để chuyển sang máy khác</footer>
+
+<script src="script.js" defer></script>
+</body>
+</html>
